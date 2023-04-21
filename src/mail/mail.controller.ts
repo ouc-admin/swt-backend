@@ -3,11 +3,11 @@ import { SendgridService } from 'src/sendgrid/sendgrid.service';
 
 @Controller('mail')
 export class MailController {
-  constructor(private readonly sendgridService: SendgridService) {}
+  constructor(private readonly sendgridService: SendgridService) { }
 
   // Here we use query parameter to get the email that we want to send
   @Post('send-email')
-  async sendEmail(@Query('email') email) {
+  async sendEmail(@Query('email') email: string) {
     const mail = {
       to: email,
       subject: 'Hello from swt-backend',
