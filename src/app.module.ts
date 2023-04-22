@@ -7,10 +7,11 @@ import { SendgridService } from './sendgrid/sendgrid.service';
 import { UserModule } from './user/user.module';
 import { PrismaService } from './prisma.service';
 import { PrismaModule } from './prisma.module';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [ConfigModule.forRoot(), UserModule, PrismaModule],
   controllers: [AppController, MailController],
-  providers: [AppService, SendgridService, PrismaService],
+  providers: [AppService, SendgridService, PrismaService, UserService],
 })
 export class AppModule {}

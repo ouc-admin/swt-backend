@@ -1,9 +1,15 @@
 import { Controller, Post, Query } from '@nestjs/common';
+import { PrismaService } from 'src/prisma.service';
 import { SendgridService } from 'src/sendgrid/sendgrid.service';
+import { UserService } from 'src/user/user.service';
 
 @Controller('mail')
 export class MailController {
-  constructor(private readonly sendgridService: SendgridService) { }
+  constructor(
+    private readonly sendgridService: SendgridService,
+    private readonly userService: UserService,
+    private readonly prismaService: PrismaService,
+  ) {}
 
   // Here we use query parameter to get the email that we want to send
   @Post('send-email')
