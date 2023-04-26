@@ -27,3 +27,9 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: pm2 restart api
+    - name: "Create env file"
+      run: |
+        touch .env
+        echo SEND_GRID_API=${{secrets.SEND_GRID_API_KEY}} >> .env
+        echo DATABASE_URL=${{secrets.DATABASE_HOST}} >> .env
+        cat .env
