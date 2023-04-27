@@ -29,10 +29,14 @@ jobs:
     - run: pm2 restart api
     - name: "Create env file"
       run: |
-        touch .env
-        echo SEND_GRID_API=${{secrets.SEND_GRID_API_KEY}} >> .env
-        echo DATABASE_URL=${{secrets.DATABASE_HOST}} >> .env
-        echo CLIENT_URL=${{secrets.CLIENT_URL}} >> .env
-        echo JWT_AUTH_SECRET=${{secrets.JWT_AUTH_SECRET}} >> .env
-        echo JWT_EMAIL_VERIFICATION=${{secrets.JWT_EMAIL_VERIFICATION}} >> .env
-        cat .env
+        echo "${{secrets.ENV_FILE }}" >> .env 
+
+
+
+# touch .env
+#         echo SEND_GRID_API=${{secrets.SEND_GRID_API_KEY}} >> .env
+#         echo DATABASE_URL=${{secrets.DATABASE_HOST}} >> .env
+#         echo CLIENT_URL=${{secrets.CLIENT_URL}} >> .env
+#         echo JWT_AUTH_SECRET=${{secrets.JWT_AUTH_SECRET}} >> .env
+#         echo JWT_EMAIL_VERIFICATION=${{secrets.JWT_EMAIL_VERIFICATION}} >> .env
+#         cat .env
