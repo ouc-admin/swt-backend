@@ -1,0 +1,42 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+    
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present 
+    - name: "Create env file"
+      run: |
+        echo "${{secrets.ENV_FILE }}" >> .env 
+    - run: pm2 restart api
+
+
+
+# touch .env
+#         echo SEND_GRID_API=${{secrets.SEND_GRID_API_KEY}} >> .env
+#         echo DATABASE_URL=${{secrets.DATABASE_HOST}} >> .env
+#         echo CLIENT_URL=${{secrets.CLIENT_URL}} >> .env
+#         echo JWT_AUTH_SECRET=${{secrets.JWT_AUTH_SECRET}} >> .env
+#         echo JWT_EMAIL_VERIFICATION=${{secrets.JWT_EMAIL_VERIFICATION}} >> .env
+#         cat .env
