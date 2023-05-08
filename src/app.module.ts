@@ -10,6 +10,7 @@ import { PrismaModule } from './prisma.module';
 import { UserService } from './user/user.service';
 import { JwtModule } from '@nestjs/jwt';
 import { EMailService } from './mail/mail.service';
+import { AuthService } from './user/auth.service';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { EMailService } from './mail/mail.service';
     PrismaService,
     UserService,
     EMailService,
+    AuthService,
   ],
 })
 export class AppModule {}
