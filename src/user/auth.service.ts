@@ -43,4 +43,44 @@ export class AuthService {
     // return the user
     return newUser;
   }
+
+  // method to signin a user with email and password
+  async signin(user: UserDto): Promise<UserType | ErrorType> {
+    // see if user exists or not with given email
+    const findUser = await this.prismaService.user.findUnique({
+      where: {
+        email: user.email,
+      },
+    });
+
+    if (!findUser) {
+      return {
+        message: 'User not found.',
+        type: 'error',
+      };
+    }
+
+    // compare the password with bcrypt
+    const isMatch = await bcrypt.compare(user.password, findUser.password);
+
+    if (isMatch) {
+      // password is okay let's login by creating a JWT token
+
+      // omitting password from user fetched from database
+      type UserPreview = Omit<UserType, 'password'>;
+
+      const validUser: UserPreview = {
+        email: findUser.email,
+        name: findUser.name,
+        token: 'sample token',
+      };
+
+      return validUser;
+    } else {
+      return {
+        message: 'Credentials are not valid',
+        type: 'error',
+      };
+    }
+  }
 }

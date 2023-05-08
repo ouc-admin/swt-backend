@@ -11,4 +11,9 @@ export class UserController {
   createUser(@Body() user: UserDto): Promise<UserType | ErrorType> {
     return this.authService.signup(user);
   }
+
+  @Get('/auth/login-user')
+  loginUser(@Body() user: UserDto): Promise<UserType | ErrorType> {
+    return this.authService.signin(user);
+  }
 }
